@@ -1,0 +1,11 @@
+﻿@model List<HelpDesk.Models.ViewModels.UnassignedTicketViewModel>
+<h2>Unassigned Tickets</h2>
+<table class="table table-striped">
+    <thead><tr><th>Ticket</th><th>Subject</th><th>Customer</th><th>Priority</th><th>Status</th><th>Created</th></tr></thead>
+    <tbody>
+        @foreach (var t in Model)
+        {
+            <tr><td>@t.TicketId</td><td>@t.Subject</td><td>@t.CustomerCompany</td><td>@t.PriorityName</td><td>@t.StatusName</td><td>@t.CreatedAt.ToString("yyyy-MM-dd")</td></tr>
+        }
+    </tbody>
+</table>

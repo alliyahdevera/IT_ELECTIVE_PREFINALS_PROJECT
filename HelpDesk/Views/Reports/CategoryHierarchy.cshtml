@@ -1,0 +1,11 @@
+﻿@model List<HelpDesk.Models.ViewModels.CategoryHierarchyViewModel>
+<h2>Category Hierarchy</h2>
+<table class="table table-striped">
+    <thead><tr><th>Category</th><th>Parent Category</th></tr></thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr><td>@c.CategoryName</td><td>@c.ParentCategoryName</td></tr>
+        }
+    </tbody>
+</table>

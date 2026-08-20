@@ -1,0 +1,11 @@
+﻿@model List<HelpDesk.Models.ViewModels.DepartmentWorkloadViewModel>
+<h2>Department Workload</h2>
+<table class="table table-striped">
+    <thead><tr><th>Department</th><th>Employee Count</th><th>Unresolved Tickets</th></tr></thead>
+    <tbody>
+        @foreach (var d in Model)
+        {
+            <tr><td>@d.DepartmentName</td><td>@d.EmployeeCount</td><td>@d.UnresolvedTicketCount</td></tr>
+        }
+    </tbody>
+</table>
