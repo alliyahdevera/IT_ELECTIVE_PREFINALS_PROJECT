@@ -96,5 +96,45 @@ namespace HelpDesk.Controllers
             return View(result);
         }
 
+        public async Task<IActionResult> UnassignedTickets()
+        {
+            var tickets = await _context.Tickets
+                .Include(t => t.Customer)
+                .Include(t => t.Priority)
+                .Include(t => t.Status)
+                .Include(t => t.TicketAssignments)
+                .ToListAsync();
+
+            var result = new List<UnassignedTicketViewModel>();
+
+            foreach (var t in tickets)
+            {
+                bool hasActiveAssignment = false;
+                foreach (var a in t.TicketAssignments)
+                {
+                    if (a.UnassignedAt == null)
+                    {
+                        hasActiveAssignment = true;
+                    }
+                }
+
+                if (hasActiveAssignment == false)
+                {
+                    var vm = new UnassignedTicketViewModel();
+                    vm.TicketId = t.Id;
+                    vm.Subject = t.Subject;
+                    vm.CustomerCompany = t.Customer.CompanyName;
+                    vm.PriorityName = t.Priority.Name;
+                    vm.StatusName = t.Status.Name;
+                    vm.CreatedAt = t.CreatedAt;
+                    result.Add(vm);
+                }
+            }
+
+            result = result.OrderBy(r => r.CreatedAt).ToList();
+
+            return View(result);
+        }
+
     }
 }
