@@ -1,0 +1,57 @@
+﻿@model HelpDesk.Models.Ticket
+<h2>Ticket #@Model.Id — @Model.Subject</h2>
+
+<dl class="row">
+    <dt class="col-sm-2">Customer</dt>
+    <dd class="col-sm-10">@Model.Customer.CompanyName (@Model.Customer.ContactName)</dd>
+    <dt class="col-sm-2">Category</dt>
+    <dd class="col-sm-10">@Model.Category.Name</dd>
+    <dt class="col-sm-2">Priority</dt>
+    <dd class="col-sm-10">@Model.Priority.Name</dd>
+    <dt class="col-sm-2">Status</dt>
+    <dd class="col-sm-10">@Model.Status.Name</dd>
+    <dt class="col-sm-2">Description</dt>
+    <dd class="col-sm-10">@Model.Description</dd>
+    <dt class="col-sm-2">Created</dt>
+    <dd class="col-sm-10">@Model.CreatedAt</dd>
+    <dt class="col-sm-2">Due</dt>
+    <dd class="col-sm-10">@(Model.DueAt?.ToString() ?? "-")</dd>
+</dl>
+
+<h4>Assignments</h4>
+<table class="table table-sm">
+    <thead><tr><th>Employee</th><th>Assigned At</th><th>Unassigned At</th><th>Primary</th></tr></thead>
+    <tbody>
+        @foreach (var a in Model.TicketAssignments)
+        {
+            <tr>
+                <td>@a.Employee.FirstName @a.Employee.LastName</td>
+                <td>@a.AssignedAt</td>
+                <td>@(a.UnassignedAt?.ToString() ?? "Active")</td>
+                <td>@(a.IsPrimary ? "Yes" : "No")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4>Comments</h4>
+<ul class="list-group mb-3">
+    @foreach (var c in Model.TicketComments.OrderBy(c => c.CreatedAt))
+    {
+        <li class="list-group-item">
+            <strong>@(c.Employee != null ? c.Employee.FirstName + " " + c.Employee.LastName : "System")</strong> (@c.CreatedAt) @(c.IsInternal ? "[Internal]" : "")
+            <div>@c.Comment</div>
+        </li>
+    }
+</ul>
+
+<h4>Tags</h4>
+<p>@string.Join(", ", Model.TicketTags.Select(tt => tt.Tag.Name))</p>
+
+<h4>Attachments</h4>
+<ul>
+    @foreach (var att in Model.TicketAttachments)
+    {
+        <li>@att.FileName (@att.ContentType, @att.FileSize bytes) — @att.UploadedAt</li>
+    }
+</ul>
