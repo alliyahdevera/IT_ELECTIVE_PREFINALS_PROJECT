@@ -1,5 +1,4 @@
-﻿using HelpDesk.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpDesk.Models

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HelpDeskMVC.Models
+namespace HelpDesk.Models
 {
     [Table("TicketCategories")]
     public class TicketCategory
