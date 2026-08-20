@@ -211,5 +211,34 @@ namespace HelpDesk.Controllers
             return View(result);
         }
 
+        public async Task<IActionResult> CategoryHierarchy()
+        {
+            var categories = await _context.TicketCategories
+                .Include(c => c.ParentCategory)
+                .ToListAsync();
+
+            var result = new List<CategoryHierarchyViewModel>();
+
+            foreach (var c in categories)
+            {
+                var vm = new CategoryHierarchyViewModel();
+                vm.CategoryName = c.Name;
+
+                if (c.ParentCategory == null)
+                {
+                    vm.ParentCategoryName = "(Root)";
+                }
+                else
+                {
+                    vm.ParentCategoryName = c.ParentCategory.Name;
+                }
+
+                result.Add(vm);
+            }
+
+            result = result.OrderBy(r => r.ParentCategoryName).ThenBy(r => r.CategoryName).ToList();
+
+            return View(result);
+        }
     }
 }
