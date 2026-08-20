@@ -3,34 +3,33 @@ using HelpDesk.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace HelpDeskMVC.Controllers
+namespace HelpDesk.Controllers
 {
-    public class EmployeesController : Controller
+    public class DepartmentsController : Controller
     {
         private HelpDeskContext _context;
 
-        public EmployeesController(HelpDeskContext context)
+        public DepartmentsController(HelpDeskContext context)
         {
             _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            var employees = await _context.Employees
-                .Include(e => e.Department)
-                .OrderBy(e => e.LastName)
+            var departments = await _context.Departments
+                .Include(d => d.Employees)
+                .OrderBy(d => d.Name)
                 .ToListAsync();
 
-            var result = new List<EmployeeIndexViewModel>();
+            var result = new List<DepartmentIndexViewModel>();
 
-            foreach (var e in employees)
+            foreach (var d in departments)
             {
-                var vm = new EmployeeIndexViewModel();
-                vm.FullName = e.FirstName + " " + e.LastName;
-                vm.Email = e.Email;
-                vm.JobTitle = e.JobTitle;
-                vm.DepartmentName = e.Department.Name;
-                vm.IsActive = e.IsActive;
+                var vm = new DepartmentIndexViewModel();
+                vm.Name = d.Name;
+                vm.Description = d.Description;
+                vm.IsActive = d.IsActive;
+                vm.EmployeeCount = d.Employees.Count;
                 result.Add(vm);
             }
 
