@@ -136,5 +136,48 @@ namespace HelpDesk.Controllers
             return View(result);
         }
 
+        public async Task<IActionResult> MultipleAssignees()
+        {
+            var tickets = await _context.Tickets
+                .Include(t => t.TicketAssignments)
+                .ThenInclude(a => a.Employee)
+                .ToListAsync();
+
+            var result = new List<MultiAssigneeTicketViewModel>();
+
+            foreach (var t in tickets)
+            {
+                var activeAssignments = new List<HelpDesk.Models.TicketAssignment>();
+                foreach (var a in t.TicketAssignments)
+                {
+                    if (a.UnassignedAt == null)
+                    {
+                        activeAssignments.Add(a);
+                    }
+                }
+
+                if (activeAssignments.Count > 1)
+                {
+                    var vm = new MultiAssigneeTicketViewModel();
+                    vm.TicketId = t.Id;
+                    vm.Subject = t.Subject;
+                    vm.ActiveAssigneeCount = activeAssignments.Count;
+
+                    var names = new List<string>();
+                    foreach (var a in activeAssignments)
+                    {
+                        names.Add(a.Employee.FirstName + " " + a.Employee.LastName);
+                    }
+                    vm.Assignees = string.Join(", ", names);
+
+                    result.Add(vm);
+                }
+            }
+
+            result = result.OrderBy(r => r.TicketId).ToList();
+
+            return View(result);
+        }
+
     }
 }
