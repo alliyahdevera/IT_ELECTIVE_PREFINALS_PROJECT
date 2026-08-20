@@ -1,0 +1,16 @@
+﻿@model List<HelpDesk.Models.ViewModels.DepartmentIndexViewModel>
+<h2>Departments</h2>
+<table class="table table-striped">
+    <thead><tr><th>Name</th><th>Description</th><th>Active</th><th>Employees</th></tr></thead>
+    <tbody>
+        @foreach (var d in Model)
+        {
+            <tr>
+                <td>@d.Name</td>
+                <td>@d.Description</td>
+                <td>@(d.IsActive ? "Yes" : "No")</td>
+                <td>@d.EmployeeCount</td>
+            </tr>
+        }
+    </tbody>
+</table>
