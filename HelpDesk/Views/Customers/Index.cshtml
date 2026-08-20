@@ -1,0 +1,17 @@
+﻿@model List<HelpDesk.Models.Customer>
+<h2>Customers</h2>
+<table class="table table-striped">
+    <thead><tr><th>Company</th><th>Contact</th><th>Email</th><th>Phone</th><th>Active</th></tr></thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.CompanyName</td>
+                <td>@c.ContactName</td>
+                <td>@c.Email</td>
+                <td>@c.Phone</td>
+                <td>@(c.IsActive ? "Yes" : "No")</td>
+            </tr>
+        }
+    </tbody>
+</table>
