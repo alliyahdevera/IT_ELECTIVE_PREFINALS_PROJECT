@@ -179,5 +179,37 @@ namespace HelpDesk.Controllers
             return View(result);
         }
 
+        public async Task<IActionResult> PrimaryAssignee()
+        {
+            var tickets = await _context.Tickets
+                .Include(t => t.TicketAssignments)
+                .ThenInclude(a => a.Employee)
+                .ToListAsync();
+
+            var result = new List<PrimaryAssigneeViewModel>();
+
+            foreach (var t in tickets)
+            {
+                var vm = new PrimaryAssigneeViewModel();
+                vm.TicketId = t.Id;
+                vm.Subject = t.Subject;
+                vm.PrimaryAssigneeName = "Unassigned";
+
+                foreach (var a in t.TicketAssignments)
+                {
+                    if (a.IsPrimary == true && a.UnassignedAt == null)
+                    {
+                        vm.PrimaryAssigneeName = a.Employee.FirstName + " " + a.Employee.LastName;
+                    }
+                }
+
+                result.Add(vm);
+            }
+
+            result = result.OrderBy(r => r.TicketId).ToList();
+
+            return View(result);
+        }
+
     }
 }
