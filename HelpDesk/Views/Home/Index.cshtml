@@ -1,8 +1,43 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
+﻿<div class="text-center mb-4">
     <h1>Help Desk System</h1>
-    <p>Use the navigation bar above to browse Departments, Employees, Teams, Customers, Tickets, and Reports.</p>
+    <p class="text-muted">Browse departments, employees, teams, customers, and support tickets.</p>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <a href="/Departments" class="card p-3 text-decoration-none d-block">
+            <h4>Departments</h4>
+            <p class="text-muted mb-0">View department structure and staffing</p>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="/Employees" class="card p-3 text-decoration-none d-block">
+            <h4>Employees</h4>
+            <p class="text-muted mb-0">Browse staff by role and department</p>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="/Teams" class="card p-3 text-decoration-none d-block">
+            <h4>Teams</h4>
+            <p class="text-muted mb-0">See team composition and members</p>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="/Customers" class="card p-3 text-decoration-none d-block">
+            <h4>Customers</h4>
+            <p class="text-muted mb-0">Browse customer accounts</p>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="/Tickets" class="card p-3 text-decoration-none d-block">
+            <h4>Tickets</h4>
+            <p class="text-muted mb-0">Browse and inspect support tickets</p>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="/Reports" class="card p-3 text-decoration-none d-block">
+            <h4>Reports</h4>
+            <p class="text-muted mb-0">Workload and assignment analytics</p>
+        </a>
+    </div>
 </div>
