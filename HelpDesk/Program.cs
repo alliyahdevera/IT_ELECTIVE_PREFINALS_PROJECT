@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using HelpDesk.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
