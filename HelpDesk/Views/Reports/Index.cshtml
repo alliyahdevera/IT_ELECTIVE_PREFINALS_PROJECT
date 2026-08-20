@@ -1,9 +1,42 @@
-﻿<h2>Reports</h2>
-<ul>
-    <li><a asp-action="EmployeeWorkload">Employee Workload</a></li>
-    <li><a asp-action="DepartmentWorkload">Department Workload</a></li>
-    <li><a asp-action="UnassignedTickets">Unassigned Tickets</a></li>
-    <li><a asp-action="MultipleAssignees">Multiple-Assignee Tickets</a></li>
-    <li><a asp-action="PrimaryAssignee">Primary Assignee</a></li>
-    <li><a asp-action="CategoryHierarchy">Category Hierarchy</a></li>
-</ul>
+﻿<div class="mb-4">
+    <h2>Reports</h2>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <a asp-action="EmployeeWorkload" class="card p-3 text-decoration-none d-block h-100">
+            <h4>Employee Workload</h4>
+            <p class="text-muted mb-0">Unresolved ticket count per active employee</p>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a asp-action="DepartmentWorkload" class="card p-3 text-decoration-none d-block h-100">
+            <h4>Department Workload</h4>
+            <p class="text-muted mb-0">Employee count and unresolved tickets per department</p>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a asp-action="UnassignedTickets" class="card p-3 text-decoration-none d-block h-100">
+            <h4>Unassigned Tickets</h4>
+            <p class="text-muted mb-0">Tickets with no active assignment</p>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a asp-action="MultipleAssignees" class="card p-3 text-decoration-none d-block h-100">
+            <h4>Multiple-Assignee Tickets</h4>
+            <p class="text-muted mb-0">Tickets with more than one active assignee</p>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a asp-action="PrimaryAssignee" class="card p-3 text-decoration-none d-block h-100">
+            <h4>Primary Assignee</h4>
+            <p class="text-muted mb-0">Primary owner for every ticket</p>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a asp-action="CategoryHierarchy" class="card p-3 text-decoration-none d-block h-100">
+            <h4>Category Hierarchy</h4>
+            <p class="text-muted mb-0">Categories and their parent categories</p>
+        </a>
+    </div>
+</div>
