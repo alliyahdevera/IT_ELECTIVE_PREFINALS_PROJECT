@@ -1,0 +1,11 @@
+﻿@model List<HelpDesk.Models.ViewModels.MultiAssigneeTicketViewModel>
+<h2>Multiple-Assignee Tickets</h2>
+<table class="table table-striped">
+    <thead><tr><th>Ticket</th><th>Subject</th><th># Active Assignees</th><th>Assignees</th></tr></thead>
+    <tbody>
+        @foreach (var t in Model)
+        {
+            <tr><td>@t.TicketId</td><td>@t.Subject</td><td>@t.ActiveAssigneeCount</td><td>@t.Assignees</td></tr>
+        }
+    </tbody>
+</table>
