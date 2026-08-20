@@ -55,6 +55,46 @@ namespace HelpDesk.Controllers
             return View(result);
         }
 
-       
+        public async Task<IActionResult> DepartmentWorkload()
+        {
+            var departments = await _context.Departments
+                .Include(d => d.Employees)
+                .ThenInclude(e => e.TicketAssignments)
+                .ThenInclude(a => a.Ticket)
+                .ThenInclude(t => t.Status)
+                .ToListAsync();
+
+            var result = new List<DepartmentWorkloadViewModel>();
+
+            foreach (var d in departments)
+            {
+                var vm = new DepartmentWorkloadViewModel();
+                vm.DepartmentName = d.Name;
+                vm.EmployeeCount = d.Employees.Count;
+
+                var ticketIds = new List<int>();
+                foreach (var e in d.Employees)
+                {
+                    foreach (var a in e.TicketAssignments)
+                    {
+                        if (a.UnassignedAt == null && a.Ticket.Status.IsClosed == false)
+                        {
+                            if (ticketIds.Contains(a.TicketId) == false)
+                            {
+                                ticketIds.Add(a.TicketId);
+                            }
+                        }
+                    }
+                }
+                vm.UnresolvedTicketCount = ticketIds.Count;
+
+                result.Add(vm);
+            }
+
+            result = result.OrderBy(r => r.DepartmentName).ToList();
+
+            return View(result);
+        }
+
     }
 }
